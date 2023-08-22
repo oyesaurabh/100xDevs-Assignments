@@ -17,6 +17,48 @@
   - `npm run test-calculator`
 */
 
-class Calculator {}
+class Calculator {
+  constructor() {
+    this.result = 0;
+  }
+  add(val) {
+    this.result += val;
+  }
+  subtract(val) {
+    this.result -= val;
+  }
+  multiply(val) {
+    this.result *= val;
+  }
+  divide(val) {
+    if (val === 0) throw new Error("Cant divide with 0");
+    this.result /= val;
+  }
+  clear() {
+    this.result = 0;
+  }
+  getResult() {
+    return this.result;
+  }
+  calculate(str) {
+    try {
+      let temp = str
+        .split(" ")
+        .filter((item) => item != "")
+        .join(" ");
+
+      this.result = eval(temp);
+
+      //checking if we are dividing with 0
+      if (this.result === Infinity) {
+        throw new Error("Division by zero is not allowed");
+      }
+      return this.result;
+    } catch (error) {
+      // if we are dividing with abc
+      throw new Error("please give proper input");
+    }
+  }
+}
 
 module.exports = Calculator;

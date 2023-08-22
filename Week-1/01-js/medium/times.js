@@ -8,5 +8,9 @@ Hint - use Date class exposed in JS
 */
 
 function calculateTime(n) {
-    return 0.01;
+  console.log("calculating sum from 1 to ", n);
+  let sum = 0;
+  for (let i = 1; i <= n; i++) sum += i;
+  return sum;
 }
+console.log("Sum = ", calculateTime(Date.now() / 1000));
