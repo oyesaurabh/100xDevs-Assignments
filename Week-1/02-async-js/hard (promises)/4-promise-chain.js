@@ -34,7 +34,6 @@ function waitThreeSecond() {
 //     });
 //   });
 // }
-
 //so using async-await
 async function calculateTime() {
   console.time("t1");
