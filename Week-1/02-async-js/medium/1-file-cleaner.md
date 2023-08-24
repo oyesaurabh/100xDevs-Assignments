@@ -23,6 +23,7 @@ const fs = require("fs");
 
 function cleanFile(path) {
   fs.readFile(path, "utf-8", (err, content) => {
+    //cleaning the content
     const newcontent = content
       .trim()
       .split(" ")
