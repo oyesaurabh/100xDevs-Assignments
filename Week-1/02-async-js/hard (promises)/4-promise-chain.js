@@ -45,6 +45,7 @@ async function calculateTime() {
 calculateTime(); // t1: 6.007s
 
 /*
+
 Compare it with the results from 3-promise-all.js
 
 this one is taking twice the time taken by promiseAll because
