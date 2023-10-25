@@ -45,11 +45,14 @@ const app = express();
 
 app.use(bodyParser.json());
 const todos = [];
+
 // 1.GET /todos - Retrieve all todo items
 // Description: Returns a list of all todo items.
 // Response: 200 OK with an array of todo items in JSON format.
 // Example: GET http://localhost:3000/todos
-app.get("/todos", (req, res) => {});
+app.get("/todos", (req, res) => {
+  return res.status(200).json(todos);
+});
 
 // 2.GET /todos/:id - Retrieve a specific todo item by ID
 // Description: Returns a specific todo item identified by its ID.
@@ -57,6 +60,10 @@ app.get("/todos", (req, res) => {});
 // Example: GET http://localhost:3000/todos/123
 app.get(`/todos/:id`, (req, res) => {
   const id = req.params.id;
+  //checking if the id exist or not
+  const index = todos.findIndex((item) => item.id == id);
+  if (index == -1) return res.status(404).send("Not Found");
+  return res.status(200).send(todos[index]);
 });
 
 // 3. POST /todos - Create a new todo item
@@ -69,7 +76,7 @@ app.post("/todos", (req, res) => {
   const { title, completed, description } = req.body;
   const id = Math.random() * 100000;
   todos.push({ id, title, completed, description });
-  res.status(201).send({ id });
+  res.status(201).send(todos[todos.length - 1]);
 });
 
 // 4. PUT /todos/:id - Update an existing todo item by ID
@@ -79,7 +86,31 @@ app.post("/todos", (req, res) => {
 // Example: PUT http://localhost:3000/todos/123
 // Request Body: { "title": "Buy groceries", "completed": true }
 app.put("/todos/:id", (req, res) => {
-  //checking if the
+  const id = parseInt(req.params.id);
+  for (let i = 0; i < todos.length; i++) {
+    if (todos[i].id == id) {
+      const newObj = {
+        ...todos[i],
+        ...req.body,
+      };
+      todos[i] = newObj;
+      return res.status(200).send(newObj);
+    }
+  }
+  res.status(404).send("Not found");
+});
+
+// 5. DELETE /todos/:id - Delete a todo item by ID
+// Description: Deletes a todo item identified by its ID.
+// Response: 200 OK if the todo item was found and deleted, or 404 Not Found if not found.
+// Example: DELETE http://localhost:3000/todos/123
+app.delete("/todos/:id", (req, res) => {
+  const id = parseInt(req.params.id);
+  const index = todos.findIndex((item) => item.id === id);
+  if (index == -1) return res.status(404).send("NOT FOUND");
+
+  todos.splice(index, 1);
+  res.status(200).send("deleted successfully");
 });
 
 module.exports = app;
