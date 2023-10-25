@@ -39,11 +39,47 @@
 
   Testing the server - run `npm run test-todoServer` command in terminal
  */
-const express = require('express');
-const bodyParser = require('body-parser');
-
+const express = require("express");
+const bodyParser = require("body-parser");
 const app = express();
 
 app.use(bodyParser.json());
+const todos = [];
+// 1.GET /todos - Retrieve all todo items
+// Description: Returns a list of all todo items.
+// Response: 200 OK with an array of todo items in JSON format.
+// Example: GET http://localhost:3000/todos
+app.get("/todos", (req, res) => {});
+
+// 2.GET /todos/:id - Retrieve a specific todo item by ID
+// Description: Returns a specific todo item identified by its ID.
+// Response: 200 OK with the todo item in JSON format if found, or 404 Not Found if not found.
+// Example: GET http://localhost:3000/todos/123
+app.get(`/todos/:id`, (req, res) => {
+  const id = req.params.id;
+});
+
+// 3. POST /todos - Create a new todo item
+// Description: Creates a new todo item.
+// Request Body: JSON object representing the todo item.
+// Response: 201 Created with the ID of the created todo item in JSON format. eg: {id: 1}
+// Example: POST http://localhost:3000/todos
+// Request Body: { "title": "Buy groceries", "completed": false, description: "I should buy groceries" }
+app.post("/todos", (req, res) => {
+  const { title, completed, description } = req.body;
+  const id = Math.random() * 100000;
+  todos.push({ id, title, completed, description });
+  res.status(201).send({ id });
+});
+
+// 4. PUT /todos/:id - Update an existing todo item by ID
+// Description: Updates an existing todo item identified by its ID.
+// Request Body: JSON object representing the updated todo item.
+// Response: 200 OK if the todo item was found and updated, or 404 Not Found if not found.
+// Example: PUT http://localhost:3000/todos/123
+// Request Body: { "title": "Buy groceries", "completed": true }
+app.put("/todos/:id", (req, res) => {
+  //checking if the
+});
 
 module.exports = app;
