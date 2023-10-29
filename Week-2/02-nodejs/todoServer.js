@@ -74,7 +74,7 @@ app.get(`/todos/:id`, (req, res) => {
 // Request Body: { "title": "Buy groceries", "completed": false, description: "I should buy groceries" }
 app.post("/todos", (req, res) => {
   const { title, completed, description } = req.body;
-  const id = Math.random() * 100000;
+  const id = Math.round(Math.random() * 100000);
   todos.push({ id, title, completed, description });
   res.status(201).send(todos[todos.length - 1]);
 });
