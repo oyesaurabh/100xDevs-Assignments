@@ -35,7 +35,7 @@ app.post("/todos", async (req, res) => {
 app.put("/todos/:id", (req, res) => {});
 app.delete("/todos/:id", (req, res) => {});
 
-app.use((req, res) => {
+app.all("*", (req, res) => {
   res.status(404).send("Not Found");
 });
 
